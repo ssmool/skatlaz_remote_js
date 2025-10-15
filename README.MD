@@ -85,22 +85,16 @@ And the HTML page contains a script block that defines a template and uses the l
     <title>skatlaz_remote example</title>
   </head>
   <body>
-    <div id="content"></div>
-
+    <ul id="list">
+      <li>{item_name}</li>
+    </ul>
+    <script src="skatlaz_js.js"></script>
     <script>
-      // create a template element in JS
-      const html_template = document.createElement('template');
-      html_template.innerHTML = `<ul id="list">` +
-        `<li>{item_name}</li>` +
-        `</ul>`;
-
-      // set the JSON address, fetch and bind
       _set_addr('data.json');
       _skatlaz_remote();
       bind(list);
     </script>
 
-    <script src="/path/to/skatlaz_remote.js"></script>
   </body>
 </html>
 ```
