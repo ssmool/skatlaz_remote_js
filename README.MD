@@ -144,6 +144,20 @@ While the core focuses on JSON, the same scaffolding idea can be expanded:
 
 These parsers can be implemented as separate adapters that transform data into the basic JSON shape the binder expects. The `#asytrick` approach refers to asynchronous, tiny adapters that run client-side (or server-side) to convert data on-the-fly with minimal overhead.
 
+## MANUAL AND EXAMPLE:
+
+READ MORE:
+
+MANUAL JAVASCRIPT REFERENCE *SKATALAZ REMOTE JS:
+
+[SKATLAZ REMOTE JS MANUAL REFERENCE](./manual.md)
+
+HTML EXAMPLE AND JAVASCRIPT FOR *SKATALAZ REMOTE JS:
+
+[SKATLAZ REMOTE JS EXAMPLE](./example.md)
+
+---
+
 ---
 
 ## Contributing
