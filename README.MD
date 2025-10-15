@@ -96,7 +96,8 @@ And the HTML page contains a script block that defines a template and uses the l
 
       // set the JSON address, fetch and bind
       _set_addr('data.json');
-      _skatlaz_remote()
+      _skatlaz_remote();
+      bind(list);
     </script>
 
     <script src="/path/to/skatlaz_remote.js"></script>
@@ -136,8 +137,7 @@ Contributions are welcome. Keep enhancements small and focused to preserve the l
 
 ## License
 
-MIT
-
+CREATIVE COMMONS ZERO
 ---
 
 ## Repository & Contact
