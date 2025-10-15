@@ -97,23 +97,6 @@ And the HTML page contains a script block that defines a template and uses the l
       // set the JSON address, fetch and bind
       _set_addr('data.json');
       _skatlaz_remote()
-        .then(data => {
-          // if the data has an array, iterate and bind each item
-          if (Array.isArray(data.items)) {
-            data.items.forEach(item => {
-              // clone template content and replace placeholders
-              const node = document.importNode(html_template.content, true);
-              // simple local replacer (the library will do this more generically)
-              node.querySelectorAll('*').forEach(el => {
-                if (el.innerHTML.includes('{item_name}')) {
-                  el.innerHTML = el.innerHTML.replace('{item_name}', item.item_name);
-                }
-              });
-              document.getElementById('content').appendChild(node);
-            });
-          }
-        })
-        .catch(err => console.error('skatlaz_remote error:', err));
     </script>
 
     <script src="/path/to/skatlaz_remote.js"></script>
