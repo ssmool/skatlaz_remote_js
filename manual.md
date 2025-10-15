@@ -1,3 +1,15 @@
+### 🌍 skatlaz_remote_js
+
+JAVASCRIPT REMOTE FETCH TO SCAFFOLDING HTML DOM WITH DATASOURCE FILES JSON-CSV-TXT-RSS-XML
+
+![SKATLAZ REMOTE JS Logo](./skatlazremote.gif)
+
+**Version:** 4.0 Beta  
+**Status:** Under Development  
+**Author:** #asytrick  
+**Website:** [github.com/ssmool/skatlaz_remote_js/](https://github.com/ssmool/skatlaz_remote_js/)  
+**Contact:** eusmool@gmail.com 
+
 # Skatlaz Remote JavaScript Manual
 
 This document provides a **developer reference and usage guide** for the Skatlaz Remote JavaScript toolkit.  
@@ -5,6 +17,30 @@ It explains how to configure, bind, and parse remote or local data sources (`XML
 `skat_laz_js.js` and `skat_laz_parsers_js.js`.
 
 ---
+
+### 🏄 Lightweight JavaScript **remote JSON scaffolder** for HTML DOM.
+
+> Small library to fetch a JSON resource and scaffold values into an HTML template in the browser with minimal client and server memory overhead. Useful for simple content pages, prototyping, and progressive enhancement.
+
+---
+
+## Features
+
+* Fetch JSON from a remote URI and return as a JavaScript object.
+* Bind JSON keys to an HTML template and append rendered content into the DOM.
+* Tiny footprint and low runtime memory usage — designed for simple pages and constrained environments.
+* Easy to extend for parsing CSV, RSS, XML, and plain text for different purposes (#asytrick).
+
+---
+
+## Installation
+
+This is a tiny client-side script. Add the `skatlaz_remote.js` file to your project and include it with a `<script>` tag.
+
+```html
+<script src="skatlaz_js.js"></script>
+<script src="skatlaz_parser_js.js"></script>
+```
 
 ## 🔧 Overview
 
