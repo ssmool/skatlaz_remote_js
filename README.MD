@@ -101,7 +101,19 @@ And the HTML page contains a script block that defines a template and uses the l
     <script>
       _set_addr('data.json');
       _skatlaz_remote();
-      bind(list);
+      bind(list);      
+    </script>
+    <script src="skatlaz_parsers_js.js"></script>
+    <script>
+    //if can use csv, xml, txt, tss, let go to next:
+    _set_addr('data.csv');
+    _set_data(_data);
+    _skatlaz_remote();
+    _json = streamCSV();
+    #the same steps let be to next others files types to parser to json by use bind() 
+    streamTXT();
+    streamXML();
+    streamRSS();
     </script>
 
   </body>
