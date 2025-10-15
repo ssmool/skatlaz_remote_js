@@ -14,7 +14,7 @@ JAVASCRIPT REMOTE FETCH TO SCAFFOLDING HTML DOM WITH DATASOURCE FILES JSON-CSV-T
 
 This document provides a **developer reference and usage guide** for the Skatlaz Remote JavaScript toolkit.  
 It explains how to configure, bind, and parse remote or local data sources (`XML`, `CSV`, `RSS`, `TXT`) using  
-`skat_laz_js.js` and `skat_laz_parsers_js.js`.
+`skatlaz_js.js` and `skatlaz_parsers_js.js`.
 
 ---
 
