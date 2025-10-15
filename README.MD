@@ -31,6 +31,7 @@ This is a tiny client-side script. Add the `skatlaz_remote.js` file to your proj
 
 ```html
 <script src="skatlaz_js.js"></script>
+<script src="skatlaz_parser_js.js"></script>
 ```
 
 ---
