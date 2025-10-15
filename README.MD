@@ -20,7 +20,7 @@ Lightweight JavaScript **remote JSON scaffolder** for HTML DOM.
 This is a tiny client-side script. Add the `skatlaz_remote.js` file to your project and include it with a `<script>` tag.
 
 ```html
-<script src="/path/to/skatlaz_remote.js"></script>
+<script src="skatlaz_js.js"></script>
 ```
 
 ---
