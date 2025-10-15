@@ -1,6 +1,15 @@
-# skatlaz_remote_js
+### 🌍 skatlaz_remote_js
 
-Lightweight JavaScript **remote JSON scaffolder** for HTML DOM.
+JAVASCRIPT REMOTE FETCH TO SCAFFOLDING HTML DOM WITH DATASOURCE FILES JOSN - [Comming soon:*CSV - *TXT - *RSS - *XML]
+![SKATLAZ REMOTE JS Logo](./assets/skatlazremote.gif)
+
+**Version:** 4.0 Beta  
+**Status:** Under Development  
+**Author:** #asytrick  
+**Website:** [github.com/ssmool/skatlaz_remote_js/](https://github.com/ssmool/skatlaz_remote_js/)  
+**Contact:** eusmool@gmail.com 
+
+### 🏄 Lightweight JavaScript **remote JSON scaffolder** for HTML DOM.
 
 > Small library to fetch a JSON resource and scaffold values into an HTML template in the browser with minimal client and server memory overhead. Useful for simple content pages, prototyping, and progressive enhancement.
 
