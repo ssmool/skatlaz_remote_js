@@ -1,7 +1,7 @@
 ### 🌍 skatlaz_remote_js
 
 JAVASCRIPT REMOTE FETCH TO SCAFFOLDING HTML DOM WITH DATASOURCE FILES JOSN - [Comming soon:*CSV - *TXT - *RSS - *XML]
-![SKATLAZ REMOTE JS Logo](./assets/skatlazremote.gif)
+![SKATLAZ REMOTE JS Logo](./skatlazremote.gif)
 
 **Version:** 4.0 Beta  
 **Status:** Under Development  
