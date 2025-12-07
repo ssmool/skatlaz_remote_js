@@ -9,8 +9,8 @@ function _set_addr(_path){
 function _skatlaz_remote(){
     _r = 'false'
     fetch(_addr_json)
-        .then(response => response.json())
-        .then(_r = data => console.log(data))
+        .then(response => response.json();_data_json = response;)
+        .then(_r = data => console.log(data);_data_json = data;)
         .catch(_r = error => console.error('Error fetching data:', error));
     _r = response;
     window.alert(response);
