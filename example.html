@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skatlaz Remote JS Example</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{title}</h1>
+        <p>{description}</p>
+        <span>Value: {value}</span>
+    </div>
+
+    <script src="skatlaz_js.js"></script>
+    <script src="skatlaz_parser_js.js"></script>
+    
+    <script>
+        async function loadData() {
+            _set_addr('data.json');
+            await _skatlaz_remote();
+            bind(document.getElementById('app'));
+        }
+        
+        // Exemplo com CSV
+        function loadCSV() {
+            _set_data('name,age,city\nJoão,25,São Paulo\nMaria,30,Rio');
+            const csvData = streamCSV();
+            console.log('CSV Data:', csvData);
+        }
+        
+        loadData();
+        loadCSV();
+    </script>
+</body>
+</html>
