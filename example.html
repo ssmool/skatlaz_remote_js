@@ -2,736 +2,122 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skatlaz Remote JS - Versão Completa</title>
+    <title>Skatlaz Remote JS - Exemplo Simples</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
         .card {
-            background: white;
+            background: #f0f0f0;
+            padding: 20px;
             border-radius: 10px;
-            padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
         }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        h1 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-        
-        h2 {
-            color: #764ba2;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        
-        h3 {
-            color: #333;
-            margin-top: 15px;
-        }
-        
-        .btn-group {
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #007bff;
             color: white;
             border: none;
             padding: 10px 20px;
+            margin: 5px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
-            transition: opacity 0.3s;
         }
-        
         button:hover {
-            opacity: 0.9;
+            background: #0056b3;
         }
-        
-        .status {
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .status.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
-        .data-panel {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
-            background: #667eea;
-            color: white;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
         pre {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
+            background: #fff;
+            padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
-            font-size: 12px;
-            margin-top: 10px;
         }
-        
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 30px;
-            padding: 20px;
-        }
-        
-        .rss-item {
-            margin-bottom: 15px;
+        .status {
             padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .rss-item strong {
-            color: #667eea;
-        }
-        
-        .error-box {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
             margin: 10px 0;
+            border-radius: 5px;
+            background: #d1ecf1;
+            color: #0c5460;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Card principal com bind de dados -->
-        <div class="card" id="mainCard">
-            <div id="status" class="status info">🔄 Sistema inicializado...</div>
-            <h1>{title}</h1>
-            <p>{description}</p>
-            <div class="data-panel">
-                <strong>📊 Status:</strong> {value}
-            </div>
-        </div>
-        
-        <!-- Controles -->
-        <div class="card">
-            <h2>🎮 Controles</h2>
-            <div class="btn-group">
-                <button onclick="app.loadJSON()">📁 Carregar JSON</button>
-                <button onclick="app.loadAPI()">🌐 Carregar API</button>
-                <button onclick="app.loadCSV()">📊 Processar CSV</button>
-                <button onclick="app.loadXML()">📄 Processar XML</button>
-                <button onclick="app.loadRSS()">📰 Processar RSS</button>
-                <button onclick="app.clearAll()">🗑️ Limpar Tudo</button>
-            </div>
-        </div>
-        
-        <!-- Grid para resultados -->
-        <div class="grid-2">
-            <!-- Dados Bind -->
-            <div class="card">
-                <h2>📦 Dados Vinculados</h2>
-                <div id="bindContent">
-                    <p>Clique em "Carregar JSON" ou "Carregar API"</p>
-                </div>
-            </div>
-            
-            <!-- Resultados CSV -->
-            <div class="card">
-                <h2>📊 Dados CSV</h2>
-                <div id="csvContent">
-                    <p>Clique em "Processar CSV"</p>
-                </div>
-            </div>
-            
-            <!-- Resultados XML -->
-            <div class="card">
-                <h2>📄 Dados XML</h2>
-                <div id="xmlContent">
-                    <p>Clique em "Processar XML"</p>
-                </div>
-            </div>
-            
-            <!-- Resultados RSS -->
-            <div class="card">
-                <h2>📰 Feed RSS</h2>
-                <div id="rssContent">
-                    <p>Clique em "Processar RSS"</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>🚀 Skatlaz Remote JS - Sistema Completo de Carregamento de Dados</p>
-            <p>💡 Suporta: JSON, CSV, XML, RSS e API</p>
-        </div>
+    <div class="card">
+        <h1>{titulo}</h1>
+        <p>{mensagem}</p>
+        <div><strong>Valor:</strong> {valor}</div>
     </div>
 
+    <div class="card">
+        <button onclick="carregarJSON()">Carregar JSON</button>
+        <button onclick="carregarCSV()">Carregar CSV</button>
+        <button onclick="carregarXML()">Carregar XML</button>
+        <button onclick="carregarRSS()">Carregar RSS</button>
+    </div>
+
+    <div class="card">
+        <h3>Resultado:</h3>
+        <div id="resultado"></div>
+        <div id="status" class="status">✅ Pronto</div>
+    </div>
+
+    <script src="skatlaz_parser_js.js"></script>
+    <script src="skatlaz_js.js"></script>
+
     <script>
-        // ============================================
-        // SKATLAZ PARSER JS - Versão Integrada
-        // ============================================
-        
-        class SkatlazParser {
-            constructor() {
-                this.dataStream = null;
-            }
-            
-            setData(data) {
-                console.log("Parser: Dados definidos", typeof data);
-                this.dataStream = data;
-            }
-            
-            streamCSV() {
-                let csvString = this.dataStream;
-                if (!csvString) return [];
-                
-                const lines = csvString.trim().split('\n');
-                if (lines.length === 0) return [];
-                
-                const headers = lines[0].split(',').map(header => header.trim());
-                const result = [];
-                
-                for (let i = 1; i < lines.length; i++) {
-                    const values = lines[i].split(',');
-                    if (values.length !== headers.length) continue;
-                    const item = {};
-                    for (let j = 0; j < headers.length; j++) {
-                        item[headers[j]] = values[j].trim();
-                    }
-                    result.push(item);
-                }
-                return result;
-            }
-            
-            streamTXT() {
-                let txtString = this.dataStream;
-                if (!txtString) return [];
-                return txtString.split('\n')
-                               .map(line => line.trim())
-                               .filter(line => line.length > 0);
-            }
-            
-            streamXML() {
-                let xmlString = this.dataStream;
-                if (!xmlString) return {};
-                
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlString, "text/xml");
-                const errorNode = xmlDoc.querySelector('parsererror');
-                
-                if (errorNode) {
-                    return { error: "Failed to parse XML", details: errorNode.textContent };
-                }
-                
-                const jsonResult = {};
-                const rootElement = xmlDoc.documentElement;
-                if (!rootElement) return { error: "XML document is empty" };
-                
-                jsonResult[rootElement.nodeName] = Array.from(rootElement.children).map(child => {
-                    const nodeData = {};
-                    Array.from(child.children).forEach(grandchild => {
-                        nodeData[grandchild.nodeName] = grandchild.textContent;
-                    });
-                    return nodeData;
-                });
-                return jsonResult;
-            }
-            
-            streamRSS() {
-                let rssString = this.dataStream;
-                if (!rssString) return [];
-                
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(rssString, "text/xml");
-                const errorNode = xmlDoc.querySelector('parsererror');
-                
-                if (errorNode) {
-                    return { error: "Failed to parse RSS", details: errorNode.textContent };
-                }
-                
-                const items = xmlDoc.querySelectorAll('item');
-                const feedItems = [];
-                
-                items.forEach(item => {
-                    const feedItem = {};
-                    ['title', 'link', 'description', 'pubDate', 'author'].forEach(tag => {
-                        const node = item.querySelector(tag);
-                        if (node) {
-                            feedItem[tag] = node.textContent;
-                        }
-                    });
-                    feedItems.push(feedItem);
-                });
-                
-                return feedItems;
-            }
-        }
-        
-        // ============================================
-        // SKATLAZ JS - Versão Integrada
-        // ============================================
-        
-        class SkatlazCore {
-            constructor() {
-                this.dataAddr = null;
-                this.dataJson = null;
-                this.dataDict = [];
-                this.parser = new SkatlazParser();
-            }
-            
-            setAddr(path) {
-                console.log("Core: Endereço definido", path);
-                this.dataAddr = path;
-            }
-            
-            async remote() {
-                if (!this.dataAddr) {
-                    console.error("Nenhum endereço definido");
-                    return null;
-                }
-                
-                try {
-                    // Suporte para dados inline
-                    if (typeof this.dataAddr === 'object') {
-                        this.dataJson = this.dataAddr;
-                        console.log("Dados inline carregados:", this.dataJson);
-                        return this.dataJson;
-                    }
-                    
-                    const response = await fetch(this.dataAddr);
-                    if (response.ok) {
-                        this.dataJson = await response.json();
-                        console.log("Dados remotos carregados:", this.dataJson);
-                        return this.dataJson;
-                    } else {
-                        console.error("Falha ao carregar:", response.status);
-                        return null;
-                    }
-                } catch (error) {
-                    console.error("Erro no fetch:", error);
-                    return null;
-                }
-            }
-            
-            bind(container) {
-                if (!this.dataJson) {
-                    console.error("Nenhum dado carregado");
-                    return;
-                }
-                
-                // Suporte para seletor CSS ou elemento DOM
-                let element = container;
-                if (typeof container === 'string') {
-                    element = document.querySelector(container);
-                    if (!element) {
-                        console.error("Container não encontrado:", container);
-                        return;
-                    }
-                }
-                
-                console.log("Bind aplicado ao elemento:", element);
-                
-                // Converte dados para dicionário
-                this.dataDict = [];
-                for (let key in this.dataJson) {
-                    if (this.dataJson.hasOwnProperty(key)) {
-                        this.dataDict.push({field: key, val: this.dataJson[key]});
-                    }
-                }
-                
-                // Função recursiva para processar nós
-                const processNode = (node) => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        let content = node.textContent;
-                        let changed = false;
-                        
-                        this.dataDict.forEach(item => {
-                            const placeholder = '{' + item.field + '}';
-                            if (content.includes(placeholder)) {
-                                content = content.split(placeholder).join(item.val);
-                                changed = true;
-                            }
-                        });
-                        
-                        if (changed) {
-                            node.textContent = content;
-                        }
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Processa atributos
-                        Array.from(node.attributes).forEach(attr => {
-                            let value = attr.value;
-                            let changed = false;
-                            
-                            this.dataDict.forEach(item => {
-                                const placeholder = '{' + item.field + '}';
-                                if (value.includes(placeholder)) {
-                                    value = value.split(placeholder).join(item.val);
-                                    changed = true;
-                                }
-                            });
-                            
-                            if (changed) {
-                                node.setAttribute(attr.name, value);
-                            }
-                        });
-                        
-                        // Processa filhos
-                        Array.from(node.childNodes).forEach(child => {
-                            processNode(child);
-                        });
-                    }
-                };
-                
-                processNode(element);
-            }
-            
-            // Métodos do parser para facilitar acesso
-            setParserData(data) {
-                this.parser.setData(data);
-            }
-            
-            parseCSV() {
-                return this.parser.streamCSV();
-            }
-            
-            parseXML() {
-                return this.parser.streamXML();
-            }
-            
-            parseRSS() {
-                return this.parser.streamRSS();
-            }
-        }
-        
-        // ============================================
-        // APLICAÇÃO PRINCIPAL
-        // ============================================
-        
-        const skatlaz = new SkatlazCore();
-        
-        const app = {
-            // Atualiza status
-            updateStatus: function(message, type = 'info') {
-                const statusDiv = document.getElementById('status');
-                if (statusDiv) {
-                    statusDiv.textContent = message;
-                    statusDiv.className = `status ${type}`;
-                }
-                console.log(`[${type.toUpperCase()}] ${message}`);
-            },
-            
-            // Mostra dados no bind
-            displayBindData: function(data) {
-                const container = document.getElementById('bindContent');
-                if (container && data) {
-                    let html = '<div class="data-panel">';
-                    for (let [key, value] of Object.entries(data)) {
-                        html += `<strong>${key}:</strong> ${value}<br>`;
-                    }
-                    html += '</div>';
-                    container.innerHTML = html;
-                }
-            },
-            
-            // Carregar JSON
-            loadJSON: async function() {
-                try {
-                    this.updateStatus("📁 Carregando data.json...", "info");
-                    skatlaz.setAddr('data.json');
-                    const data = await skatlaz.remote();
-                    
-                    if (data) {
-                        skatlaz.bind('#mainCard');
-                        this.displayBindData(data);
-                        this.updateStatus("✅ Dados carregados de data.json!", "success");
-                    } else {
-                        this.updateStatus("❌ Falha ao carregar data.json", "error");
-                    }
-                } catch (error) {
-                    this.updateStatus(`❌ Erro: ${error.message}`, "error");
-                }
-            },
-            
-            // Carregar da API
-            loadAPI: async function() {
-                try {
-                    this.updateStatus("🌐 Carregando da API...", "info");
-                    skatlaz.setAddr('/api/data');
-                    const data = await skatlaz.remote();
-                    
-                    if (data) {
-                        skatlaz.bind('#mainCard');
-                        this.displayBindData(data);
-                        this.updateStatus("✅ Dados carregados da API!", "success");
-                    } else {
-                        this.updateStatus("❌ Falha ao carregar da API", "error");
-                    }
-                } catch (error) {
-                    this.updateStatus(`❌ Erro: ${error.message}`, "error");
-                }
-            },
-            
-            // Carregar CSV
-            loadCSV: async function() {
-                try {
-                    this.updateStatus("📊 Processando CSV...", "info");
-                    
-                    // Dados CSV de exemplo
-                    const csvExample = `nome,idade,cidade,profissao
-João Silva,25,São Paulo,Desenvolvedor
-Maria Santos,30,Rio de Janeiro,Designer
-Carlos Oliveira,35,Belo Horizonte,Analista
-Ana Souza,28,Porto Alegre,Engenheira
-Pedro Costa,32,Salvador,Arquiteto`;
-                    
-                    skatlaz.setParserData(csvExample);
-                    const data = skatlaz.parseCSV();
-                    
-                    const container = document.getElementById('csvContent');
-                    if (container && data.length > 0) {
-                        let html = '<table><thead><tr>';
-                        Object.keys(data[0]).forEach(key => {
-                            html += `<th>${key}</th>`;
-                        });
-                        html += '</tr></thead><tbody>';
-                        
-                        data.forEach(row => {
-                            html += '<tr>';
-                            Object.values(row).forEach(value => {
-                                html += `<td>${value}</td>`;
-                            });
-                            html += '</tr>';
-                        });
-                        html += '</tbody></table>';
-                        container.innerHTML = html;
-                        this.updateStatus(`✅ CSV processado: ${data.length} registros`, "success");
-                    } else {
-                        container.innerHTML = '<p>Nenhum dado encontrado</p>';
-                        this.updateStatus("⚠️ CSV vazio", "info");
-                    }
-                } catch (error) {
-                    this.updateStatus(`❌ Erro: ${error.message}`, "error");
-                    document.getElementById('csvContent').innerHTML = `<div class="error-box">❌ Erro: ${error.message}</div>`;
-                }
-            },
-            
-            // Carregar XML
-            loadXML: async function() {
-                try {
-                    this.updateStatus("📄 Processando XML...", "info");
-                    
-                    // Dados XML de exemplo
-                    const xmlExample = `<?xml version="1.0" encoding="UTF-8"?>
-<produtos>
-    <produto>
-        <id>1</id>
-        <nome>Notebook Dell</nome>
-        <preco>3500.00</preco>
-        <categoria>Eletrônicos</categoria>
-    </produto>
-    <produto>
-        <id>2</id>
-        <nome>Mouse Logitech</nome>
-        <preco>150.00</preco>
-        <categoria>Eletrônicos</categoria>
-    </produto>
-    <produto>
-        <id>3</id>
-        <nome>Teclado Mecânico</nome>
-        <preco>250.00</preco>
-        <categoria>Eletrônicos</categoria>
-    </produto>
-</produtos>`;
-                    
-                    skatlaz.setParserData(xmlExample);
-                    const data = skatlaz.parseXML();
-                    
-                    const container = document.getElementById('xmlContent');
-                    if (container && data && !data.error) {
-                        let html = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
-                        container.innerHTML = html;
-                        this.updateStatus("✅ XML processado com sucesso!", "success");
-                    } else {
-                        container.innerHTML = `<div class="error-box">❌ Erro: ${data?.error || 'Falha desconhecida'}</div>`;
-                        this.updateStatus("❌ Falha ao processar XML", "error");
-                    }
-                } catch (error) {
-                    this.updateStatus(`❌ Erro: ${error.message}`, "error");
-                    document.getElementById('xmlContent').innerHTML = `<div class="error-box">❌ Erro: ${error.message}</div>`;
-                }
-            },
-            
-            // Carregar RSS
-            loadRSS: async function() {
-                try {
-                    this.updateStatus("📰 Processando RSS...", "info");
-                    
-                    // Dados RSS de exemplo
-                    const rssExample = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-    <channel>
-        <title>Blog Skatlaz Tech</title>
-        <link>http://skatlaz.com</link>
-        <description>Notícias e tutoriais sobre tecnologia</description>
-        <item>
-            <title>Introdução ao JavaScript Moderno</title>
-            <link>http://skatlaz.com/js-moderno</link>
-            <description>Aprenda os conceitos fundamentais do JavaScript ES6+</description>
-            <pubDate>Mon, 01 Jan 2024 10:00:00 GMT</pubDate>
-            <author>autor@skatlaz.com</author>
-        </item>
-        <item>
-            <title>CSS Grid vs Flexbox</title>
-            <link>http://skatlaz.com/css-grid-flexbox</link>
-            <description>Qual usar em cada situação? Guia completo</description>
-            <pubDate>Tue, 02 Jan 2024 14:30:00 GMT</pubDate>
-            <author>autor@skatlaz.com</author>
-        </item>
-        <item>
-            <title>Python para Análise de Dados</title>
-            <link>http://skatlaz.com/python-dados</link>
-            <description>Bibliotecas essenciais para data science</description>
-            <pubDate>Wed, 03 Jan 2024 09:15:00 GMT</pubDate>
-            <author>autor@skatlaz.com</author>
-        </item>
-    </channel>
-</rss>`;
-                    
-                    skatlaz.setParserData(rssExample);
-                    const data = skatlaz.parseRSS();
-                    
-                    const container = document.getElementById('rssContent');
-                    if (container && Array.isArray(data) && data.length > 0) {
-                        let html = '';
-                        data.forEach((item, index) => {
-                            html += `
-                                <div class="rss-item">
-                                    <strong>📌 ${item.title || 'Sem título'}</strong><br>
-                                    ${item.description ? `<small>📝 ${item.description.substring(0, 150)}${item.description.length > 150 ? '...' : ''}</small><br>` : ''}
-                                    ${item.link ? `<small>🔗 <a href="${item.link}" target="_blank">${item.link}</a></small><br>` : ''}
-                                    ${item.pubDate ? `<small>📅 ${item.pubDate}</small>` : ''}
-                                </div>
-                            `;
-                        });
-                        container.innerHTML = html;
-                        this.updateStatus(`✅ RSS processado: ${data.length} itens`, "success");
-                    } else {
-                        container.innerHTML = '<p>⚠️ Nenhum item encontrado no feed RSS</p>';
-                        this.updateStatus("⚠️ RSS vazio", "info");
-                    }
-                } catch (error) {
-                    this.updateStatus(`❌ Erro ao processar RSS: ${error.message}`, "error");
-                    document.getElementById('rssContent').innerHTML = `<div class="error-box">❌ Erro: ${error.message}</div>`;
-                }
-            },
-            
-            // Limpar tudo
-            clearAll: function() {
-                document.getElementById('bindContent').innerHTML = '<p>Clique em "Carregar JSON" ou "Carregar API"</p>';
-                document.getElementById('csvContent').innerHTML = '<p>Clique em "Processar CSV"</p>';
-                document.getElementById('xmlContent').innerHTML = '<p>Clique em "Processar XML"</p>';
-                document.getElementById('rssContent').innerHTML = '<p>Clique em "Processar RSS"</p>';
-                
-                this.updateStatus("🗑️ Todos os dados foram limpos", "info");
-                
-                // Reset do card principal
-                skatlaz.setAddr({
-                    "title": "Skatlaz Remote JS",
-                    "description": "Sistema pronto para carregar dados!",
-                    "value": "Clique em um dos botões acima"
-                });
-                skatlaz.remote().then(() => {
-                    skatlaz.bind('#mainCard');
-                });
-            }
+        // Dados de exemplo
+        const dadosExemplo = {
+            titulo: "Skatlaz Remote JS",
+            mensagem: "Dados carregados com sucesso!",
+            valor: "Funcionando!"
         };
-        
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log("🚀 Skatlaz Remote JS Iniciado!");
-            console.log("Versão: 2.0 - Integrada");
-            
-            // Dados iniciais
-            skatlaz.setAddr({
-                "title": "Skatlaz Remote JS",
-                "description": "Sistema completo para scaffolding de HTML com dados remotos",
-                "value": "✅ Sistema operacional! Clique nos botões para testar"
+
+        // Função para mostrar status
+        function mostrarStatus(msg) {
+            document.getElementById('status').innerHTML = msg;
+        }
+
+        // Carregar JSON
+        function carregarJSON() {
+            _set_addr(dadosExemplo);
+            _skatlaz_remote().then(() => {
+                bind(document.body);
+                mostrarStatus("✅ JSON carregado!");
+                document.getElementById('resultado').innerHTML = '<pre>' + JSON.stringify(dadosExemplo, null, 2) + '</pre>';
             });
-            await skatlaz.remote();
-            skatlaz.bind('#mainCard');
-            
-            app.updateStatus("✅ Sistema pronto! Clique nos botões para carregar dados", "success");
-        });
+        }
+
+        // Carregar CSV
+        function carregarCSV() {
+            const csvData = "nome,idade,cidade\nJoão,25,São Paulo\nMaria,30,Rio\nCarlos,35,BH";
+            _set_data(csvData);
+            const resultado = streamCSV();
+            mostrarStatus("✅ CSV processado!");
+            document.getElementById('resultado').innerHTML = '<pre>' + JSON.stringify(resultado, null, 2) + '</pre>';
+        }
+
+        // Carregar XML
+        function carregarXML() {
+            const xmlData = '<?xml version="1.0"?><root><item><id>1</id><nome>Produto 1</nome></item><item><id>2</id><nome>Produto 2</nome></item></root>';
+            _set_data(xmlData);
+            const resultado = streamXML();
+            mostrarStatus("✅ XML processado!");
+            document.getElementById('resultado').innerHTML = '<pre>' + JSON.stringify(resultado, null, 2) + '</pre>';
+        }
+
+        // Carregar RSS
+        function carregarRSS() {
+            const rssData = '<?xml version="1.0"?><rss><channel><item><title>Notícia 1</title><description>Texto 1</description></item><item><title>Notícia 2</title><description>Texto 2</description></item></channel></rss>';
+            _set_data(rssData);
+            const resultado = streamRSS();
+            mostrarStatus("✅ RSS processado!");
+            document.getElementById('resultado').innerHTML = '<pre>' + JSON.stringify(resultado, null, 2) + '</pre>';
+        }
+
+        // Inicializar
+        carregarJSON();
     </script>
 </body>
 </html>
