@@ -6,50 +6,51 @@ function _set_addr(_path){
     _addr_json = _path;
 }
 
-function _skatlaz_remote(){
-    _r = 'false'
-    fetch(_addr_json)
-        .then(response => {
-            if(response.ok){
-                _data_json = response.json();
-                return response.json(); 
-            }
-        })
-        .then(data => {
-                console.log(data);
-                _data_json = data;
-                return data;
-        })
-        .catch(error => {
-                return error;
-        });
-        return _r;
+async function _skatlaz_remote(){
+    try {
+        const response = await fetch(_addr_json);
+        if(response.ok){
+            _data_json = await response.json();
+            console.log(_data_json);
+            return _data_json;
+        }
+        return null;
+    } catch(error) {
+        console.error(error);
+        return null;
+    }
 }
 
 function bind(dom_obj){
-        const container = dom_obj;
-        _mvap = [];
-        let _data = Object.keys(_data_json);
-        _data.forEach(_item => {
-            _vmv_tx0 = _item.name;
-            _vmv_tx1 = _item.value;
-            _vmv = {"field":_vmv_tx0,"val":_vmv_tx1};
-            _data_dict.push(_vmv);
-        });
+    if (!_data_json || _data_json === 'false') {
+        console.error("No data loaded. Call _skatlaz_remote() first.");
+        return;
+    }
+    
+    const container = dom_obj;
+    _data_dict = [];
+    
+    // Converte objeto em array de campos/valores
+    for (let key in _data_json) {
+        if (_data_json.hasOwnProperty(key)) {
+            _data_dict.push({field: key, val: _data_json[key]});
+        }
+    }
+    
+    // Processa cada elemento do container que tenha placeholders
+    const elements = container.querySelectorAll('*');
+    elements.forEach(el => {
+        let originalHtml = el.innerHTML;
+        let modifiedHtml = originalHtml;
+        
         _data_dict.forEach(obj_x => {
-            let _dom = Object.keys(dom_obj);
-            _dom.forEach(ddx => {
-                c = 0;
-                if(ddx.TextContent.indexof('{' + _obj_x.field + '}')){
-                    _ix = ddx.TextContent.indexof('{' + _obj_x.field + '}');
-                    _ixfl = '{' +_obj_x.field + '}';
-                    _ixl = _ixfl.length;
-                    _six = ddx.TextContent.substring(_ix,_ixl);
-                    _mv_0r = _six.replace(_six, _obj_x.val).replace('{','').replace('}','');
-                    ddomx = dxx.replace(_six,_mv_0r);
-                    container.appendChild(ddomx);
-                }
-                c++;
-            });
+            const placeholder = '{' + obj_x.field + '}';
+            const regex = new RegExp(placeholder.replace(/[{}]/g, '\\$&'), 'g');
+            modifiedHtml = modifiedHtml.replace(regex, obj_x.val);
         });
+        
+        if (modifiedHtml !== originalHtml) {
+            el.innerHTML = modifiedHtml;
+        }
+    });
 }
