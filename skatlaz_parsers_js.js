@@ -39,7 +39,7 @@ function streamXML() {
     if (!xmlString || xmlString === 'false') return {};
     
     if (typeof DOMParser === 'undefined') {
-        return { error: "DOMParser not found. This function requires a browser environment." };
+        return { error: "DOMParser not found" };
     }
     
     const parser = new DOMParser();
@@ -47,12 +47,12 @@ function streamXML() {
     const errorNode = xmlDoc.querySelector('parsererror');
     
     if (errorNode) {
-        return { error: "Failed to parse XML string.", details: errorNode.textContent };
+        return { error: "Failed to parse XML", details: errorNode.textContent };
     }
     
     const jsonResult = {};
     const rootElement = xmlDoc.documentElement;
-    if (!rootElement) return { error: "XML document is empty." };
+    if (!rootElement) return { error: "XML document is empty" };
     
     jsonResult[rootElement.nodeName] = Array.from(rootElement.children).map(child => {
         const nodeData = {};
@@ -69,7 +69,7 @@ function streamRSS() {
     if (!rssString || rssString === 'false') return [];
     
     if (typeof DOMParser === 'undefined') {
-        return { error: "DOMParser not found. This function requires a browser environment." };
+        return { error: "DOMParser not found" };
     }
     
     const parser = new DOMParser();
@@ -77,7 +77,7 @@ function streamRSS() {
     const errorNode = xmlDoc.querySelector('parsererror');
     
     if (errorNode) {
-        return { error: "Failed to parse RSS string.", details: errorNode.textContent };
+        return { error: "Failed to parse RSS", details: errorNode.textContent };
     }
     
     const items = xmlDoc.querySelectorAll('item');
