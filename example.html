@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Skatlaz Remote JS Example</title>
+    <meta charset="UTF-8">
 </head>
 <body>
     <div id="app">
@@ -14,21 +15,57 @@
     <script src="skatlaz_parser_js.js"></script>
     
     <script>
-        async function loadData() {
-            _set_addr('data.json');
-            await _skatlaz_remote();
-            bind(document.getElementById('app'));
-        }
-        
-        // Exemplo com CSV
-        function loadCSV() {
-            _set_data('name,age,city\nJoão,25,São Paulo\nMaria,30,Rio');
+        // Aguarda o DOM carregar completamente
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log("DOM loaded, starting...");
+            
+            // Exemplo 1: Carregar dados remotos (requer servidor HTTP)
+            try {
+                // Usando dados inline para teste (não requer servidor)
+                _set_addr({
+                    "title": "Skatlaz Remote JS",
+                    "description": "Biblioteca para scaffolding de HTML com dados remotos",
+                    "value": "Funcionando corretamente!"
+                });
+                await _skatlaz_remote();
+                bind('#app');
+                console.log("Dados inline carregados com sucesso!");
+            } catch(e) {
+                console.error("Erro ao carregar dados inline:", e);
+            }
+            
+            // Exemplo 2: Processar CSV
+            console.log("\n--- Teste CSV ---");
+            _set_data('name,age,city\nJoão,25,São Paulo\nMaria,30,Rio de Janeiro\nCarlos,35,Belo Horizonte');
             const csvData = streamCSV();
-            console.log('CSV Data:', csvData);
-        }
-        
-        loadData();
-        loadCSV();
+            console.log("CSV Data:", csvData);
+            
+            // Exemplo 3: Processar TXT
+            console.log("\n--- Teste TXT ---");
+            _set_data('Linha 1\nLinha 2\nLinha 3');
+            const txtData = streamTXT();
+            console.log("TXT Data:", txtData);
+        });
     </script>
+    
+    <!-- Instruções -->
+    <div style="margin-top: 50px; padding: 20px; background: #f0f0f0;">
+        <h3>Instruções:</h3>
+        <p>Para carregar arquivos remotos, você precisa de um servidor HTTP:</p>
+        <pre>
+# Na pasta do projeto:
+python3 -m http.server 8000
+
+# Depois acesse: http://localhost:8000/example.html
+        </pre>
+        <p>Exemplo de data.json:</p>
+        <pre>
+{
+    "title": "Título do JSON",
+    "description": "Descrição vinda do arquivo",
+    "value": "Valor carregado"
+}
+        </pre>
+    </div>
 </body>
 </html>
